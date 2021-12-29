@@ -1,5 +1,11 @@
+from gui import display
+from generate import generate
+
+
 def main():
-    pass
+
+    map = generate()
+    display(map)
 
 
 if __name__ == "__main__":

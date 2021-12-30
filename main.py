@@ -1,7 +1,5 @@
-from gui import display
 from generate import make_map
-
-
+from gui import  display
 def main():
 
     # read input for maze size (maze is a square)

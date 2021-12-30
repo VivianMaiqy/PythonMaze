@@ -58,6 +58,7 @@ def display(map:List[List[int]]) -> None :
         draw_text(text_3, text_3_rect, screen, x_3, y_3)
         screen.blit(t, (x,y))
 
+        return text_1_rect, text_2_rect, text_3_rect
     while True:
 
         # if on menu screen
@@ -65,7 +66,7 @@ def display(map:List[List[int]]) -> None :
             # load screen color 
             screen.fill((234,225,176))
             # add title
-            draw_menu()
+            sm_mz, md_mz, lg_mz = draw_menu()
         # detect event
         for event in pygame.event.get():
 
@@ -73,5 +74,17 @@ def display(map:List[List[int]]) -> None :
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-        
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+
+                if event.button == 1:
+                    pass
+                if sm_mz.collidepoint(event.pos):
+                    print("click small maze")
+                    
+                if md_mz.collidepoint(event.pos):
+                    print("click medium maze")
+
+                if lg_mz.collidepoint(event.pos):
+                    print("click large maze")
         pygame.display.update()

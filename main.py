@@ -8,7 +8,7 @@ def main():
     size = 20
 
     map = make_map(size)
-    # display(map)
+    display(map)
 
 
 if __name__ == "__main__":

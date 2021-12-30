@@ -1,11 +1,14 @@
 from gui import display
-from generate import generate
+from generate import make_map
 
 
 def main():
 
-    map = generate()
-    display(map)
+    # read input for maze size (maze is a square)
+    size = 20
+
+    map = make_map(size)
+    # display(map)
 
 
 if __name__ == "__main__":

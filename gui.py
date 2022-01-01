@@ -80,11 +80,11 @@ def display(map:List[List[int]]) -> None :
         x_pos = x_cor
         y_pos = y_cor
         for ver in map:
+            left_nei = False
+            right_nei = False
+            top_nei = False
+            bottom_nei = False
             for snei in ver.select_nei:
-                left_nei = False
-                right_nei = False
-                top_nei = False
-                bottom_nei = False
                 if snei.id == ver.id - 1:
                     left_nei = True
                 if snei.id == ver.id + 1:
@@ -94,19 +94,20 @@ def display(map:List[List[int]]) -> None :
                 if snei.id == ver.id + size:
                     bottom_nei = True
             if not left_nei:
-                # this is |
-                pygame.draw.rect(screen, RED, (x_cor, y_cor, WALL_W, PATH_W))
+                # draw left wall
+                pygame.draw.rect(screen, RED, (x_pos, y_pos, WALL_W, PATH_W))
             if not right_nei:
-                pygame.draw.rect(screen, RED, (x_cor+WALL_W, y_cor, WALL_W, PATH_W))
+                # draw right wall
+                pygame.draw.rect(screen, RED, (x_pos+WALL_W+PATH_W, y_pos, WALL_W, PATH_W))
             if not top_nei:
-                # this is _
-                pygame.draw.rect(screen, RED, (x_cor, y_cor, WALL_W, PATH_W))
+                # draw top wall
+                pygame.draw.rect(screen, RED, (x_pos, y_pos, PATH_W, WALL_W))
             if not bottom_nei:
-                pygame.djaw.rect(screen, RED, (x_cor, y_cor-WALL_W, PATH_W, WALL_W))
-            x_cor = (ver.id % size) * (WALL_W + PATH_W)
-            y_cor = (ver.id % size) * (WALL_W + PATH_W)
-        # draw |
-        pygame.draw.rect(screen, RED, (x_cor, y_cor, WALL_W, PATH_W))
+                # draw bottom wall
+                pygame.draw.rect(screen, RED, (x_pos, y_pos-WALL_W-PATH_W, PATH_W, WALL_W))
+            x_pos = x_cor+(ver.id % size) * (WALL_W + PATH_W)
+            y_pos = y_cor+(ver.id // size) * (WALL_W + PATH_W)
+        
     # menu loop
     while True:
 
@@ -147,4 +148,5 @@ def display(map:List[List[int]]) -> None :
                     size = LARGE
                     menu = False
                     print("click large maze")
+                drawMaze(map, size) 
         pygame.display.update()

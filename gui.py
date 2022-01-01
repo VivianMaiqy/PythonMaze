@@ -2,7 +2,9 @@ from generate import make_map
 import pygame
 from typing import List
 import sys
+import time
 
+TEST = 4
 SMALL = 15
 MEDIUM = 20
 LARGE = 25
@@ -80,6 +82,9 @@ def display(map:List[List[int]]) -> None :
         x_pos = x_cor
         y_pos = y_cor
         for ver in map:
+            x_pos = x_cor+(ver.id % size) * (WALL_W + PATH_W)
+            y_pos = y_cor+(ver.id // size) * (WALL_W + PATH_W)
+         #   print(x_pos, y_pos)
             left_nei = False
             right_nei = False
             top_nei = False
@@ -96,18 +101,23 @@ def display(map:List[List[int]]) -> None :
             if not left_nei:
                 # draw left wall
                 pygame.draw.rect(screen, RED, (x_pos, y_pos, WALL_W, PATH_W))
+               # pygame.display.update()
+               # time.sleep(1)
             if not right_nei:
                 # draw right wall
                 pygame.draw.rect(screen, RED, (x_pos+WALL_W+PATH_W, y_pos, WALL_W, PATH_W))
+               # pygame.display.update()
+                # time.sleep(1)
             if not top_nei:
                 # draw top wall
                 pygame.draw.rect(screen, RED, (x_pos, y_pos, PATH_W, WALL_W))
+               # pygame.display.update()
+               # time.sleep(1)
             if not bottom_nei:
                 # draw bottom wall
-                pygame.draw.rect(screen, RED, (x_pos, y_pos-WALL_W-PATH_W, PATH_W, WALL_W))
-            x_pos = x_cor+(ver.id % size) * (WALL_W + PATH_W)
-            y_pos = y_cor+(ver.id // size) * (WALL_W + PATH_W)
-        
+                pygame.draw.rect(screen, RED, (x_pos, y_pos+WALL_W+PATH_W, PATH_W, WALL_W))
+               # pygame.display.update()
+               # time.sleep(1)
     # menu loop
     while True:
 
@@ -119,7 +129,7 @@ def display(map:List[List[int]]) -> None :
             sm_mz, md_mz, lg_mz = draw_menu()
         # detect event
         else:
-            drawMaze(map, size) 
+            drawMaze(map, size)
         for event in pygame.event.get():
 
             # if quit
@@ -133,7 +143,7 @@ def display(map:List[List[int]]) -> None :
                     pass
                 if sm_mz.collidepoint(event.pos):
                     map = make_map(SMALL)
-                    size = SMALL
+                    size = SMALL 
                     menu = False
                     print("click small maze")
                     
@@ -147,6 +157,5 @@ def display(map:List[List[int]]) -> None :
                     map = make_map(LARGE)
                     size = LARGE
                     menu = False
-                    print("click large maze")
-                drawMaze(map, size) 
+                    print("click large maze") 
         pygame.display.update()

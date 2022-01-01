@@ -40,6 +40,7 @@ def dfs(verList: List[vertex]):
         if len(unfound_nei) > 0:
             select_ver = verList[random.choice(unfound_nei)]
             curr_ver.select_nei.append(select_ver)
+            select_ver.select_nei.append(curr_ver)
             select_ver.found = True
             stack.append(select_ver)
 

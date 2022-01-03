@@ -60,11 +60,4 @@ def make_map(size: int) -> List[List[int]]:
         verList.append(vertex(id, size))
 
     dfs(verList)
-    '''
-    for i in range(numVerti):
-        print(i, end="")
-        for j in verList[i].select_nei:
-            print(" ", j.id, end="")
-        print(" ")
-    '''
     return verList

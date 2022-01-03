@@ -1,5 +1,6 @@
 from generate import make_map
 import pygame
+from pygame import mixer
 from typing import List
 import sys
 import time
@@ -31,6 +32,9 @@ def display(map:List[List[int]]) -> None :
     icon = pygame.transform.scale(icon, (ICON_SIZE, ICON_SIZE))
     pygame.display.set_icon(icon)
 
+    # play mucis 
+    mixer.music.load("music/background.mp3")
+    mixer.music.play(-1)
     # init variables
     menu = True
     size = None
@@ -101,23 +105,34 @@ def display(map:List[List[int]]) -> None :
             if not left_nei:
                 # draw left wall
                 pygame.draw.rect(screen, RED, (x_pos, y_pos, WALL_W, PATH_W))
-               # pygame.display.update()
-               # time.sleep(1)
             if not right_nei:
-                # draw right wall
                 pygame.draw.rect(screen, RED, (x_pos+WALL_W+PATH_W, y_pos, WALL_W, PATH_W))
-               # pygame.display.update()
-                # time.sleep(1)
             if not top_nei:
                 # draw top wall
                 pygame.draw.rect(screen, RED, (x_pos, y_pos, PATH_W, WALL_W))
-               # pygame.display.update()
-               # time.sleep(1)
             if not bottom_nei:
                 # draw bottom wall
                 pygame.draw.rect(screen, RED, (x_pos, y_pos+WALL_W+PATH_W, PATH_W, WALL_W))
-               # pygame.display.update()
-               # time.sleep(1)
+
+        font = pygame.font.SysFont(None, 50)
+        # draw menu quit button
+        q_menu= font.render('menu', 1, WHITE)
+        men_rect = q_menu.get_rect() 
+        x = (SCREEN_WIDTH - men_rect.width - 10) 
+        y = (SCREEN_HEIGHT - men_rect.height - 10) 
+        draw_text(q_menu, men_rect, screen, x, y)
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                
+                if men_rect.collidepoint(event.pos):
+                    mixer.music.load("music/background.mp3")
+                    mixer.music.play(-1)
+                    return True
+                else:
+                    return False
+
     # menu loop
     while True:
 
@@ -129,7 +144,7 @@ def display(map:List[List[int]]) -> None :
             sm_mz, md_mz, lg_mz = draw_menu()
         # detect event
         else:
-            drawMaze(map, size)
+            menu = drawMaze(map, size)
         for event in pygame.event.get():
 
             # if quit
@@ -147,15 +162,20 @@ def display(map:List[List[int]]) -> None :
                     menu = False
                     print("click small maze")
                     
+                    mixer.music.load("music/in_game.mp3")
+                    mixer.music.play(-1)
                 if md_mz.collidepoint(event.pos):
                     map = make_map(MEDIUM)
                     size = MEDIUM
                     menu = False
                     print("click medium maze")
-
+                    mixer.music.load("music/in_game.mp3")
+                    mixer.music.play(-1)
                 if lg_mz.collidepoint(event.pos):
                     map = make_map(LARGE)
                     size = LARGE
                     menu = False
                     print("click large maze") 
+                    mixer.music.load("music/in_game.mp3")
+                    mixer.music.play(-1)
         pygame.display.update()

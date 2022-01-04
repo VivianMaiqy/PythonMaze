@@ -114,6 +114,14 @@ def display(map:List[List[int]]) -> None :
                 # draw bottom wall
                 pygame.draw.rect(screen, RED, (x_pos, y_pos+WALL_W+PATH_W, PATH_W, WALL_W))
 
+            # the begin block
+            if ver.id == 0:
+                pygame.draw.rect(screen, WHITE, (x_pos + WALL_W, y_pos+WALL_W, PATH_W, PATH_W))
+
+            # the begin block
+            if ver.id == size**2 - 1:
+                pygame.draw.rect(screen, WHITE, (x_pos + WALL_W, y_pos+WALL_W, PATH_W, PATH_W))
+
         font = pygame.font.SysFont(None, 50)
         # draw menu quit button
         q_menu= font.render('menu', 1, WHITE)
@@ -122,8 +130,12 @@ def display(map:List[List[int]]) -> None :
         y = (SCREEN_HEIGHT - men_rect.height - 10) 
         draw_text(q_menu, men_rect, screen, x, y)
 
+        # game loop
         for event in pygame.event.get():
-
+            # if quit
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 
                 if men_rect.collidepoint(event.pos):
@@ -160,22 +172,18 @@ def display(map:List[List[int]]) -> None :
                     map = make_map(SMALL)
                     size = SMALL 
                     menu = False
-                    print("click small maze")
-                    
                     mixer.music.load("music/in_game.mp3")
                     mixer.music.play(-1)
                 if md_mz.collidepoint(event.pos):
                     map = make_map(MEDIUM)
                     size = MEDIUM
                     menu = False
-                    print("click medium maze")
                     mixer.music.load("music/in_game.mp3")
                     mixer.music.play(-1)
                 if lg_mz.collidepoint(event.pos):
                     map = make_map(LARGE)
                     size = LARGE
                     menu = False
-                    print("click large maze") 
                     mixer.music.load("music/in_game.mp3")
                     mixer.music.play(-1)
         pygame.display.update()
